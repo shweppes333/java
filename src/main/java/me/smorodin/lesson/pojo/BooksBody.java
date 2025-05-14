@@ -1,23 +1,24 @@
 package me.smorodin.lesson.pojo;
 
 import me.smorodin.lesson.entity.Author;
+import me.smorodin.lesson.entity.Reader;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 public class BooksBody {
 
     private String title;
     private Long authorId;
-    private String isbn;
     private LocalDate publishedDate;
+    private Set<Reader> readers;
 
     public BooksBody() {
     }
 
-    public BooksBody(String title, Long authorId, String isbn, LocalDate publishedDate) {
+    public BooksBody(String title, Long authorId, LocalDate publishedDate) {
         this.title = title;
         this.authorId = authorId;
-        this.isbn = isbn;
         this.publishedDate = publishedDate;
     }
 
@@ -36,12 +37,12 @@ public class BooksBody {
         this.authorId = authorId;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public Set<Reader> getReaders() {
+        return readers;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public void setReaders(Set<Reader> readers) {
+        this.readers = readers;
     }
 
     public LocalDate getPublishedDate() {

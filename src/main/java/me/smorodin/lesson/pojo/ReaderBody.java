@@ -2,19 +2,15 @@ package me.smorodin.lesson.pojo;
 
 import me.smorodin.lesson.entity.Books;
 
+import java.util.Set;
+
 public class ReaderBody {
     private String firstName;
     private String lastName;
-    private String contactInfo;
-    private Integer purchasedBooksCount;
-    private Books book;
 
-    public ReaderBody(String firstName, String lastName, String contactInfo, Integer purchasedBooksCount, Books book) {
+    public ReaderBody(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.contactInfo = contactInfo;
-        this.purchasedBooksCount = purchasedBooksCount;
-        this.book = book;
     }
 
     public String getFirstName() {
@@ -33,27 +29,4 @@ public class ReaderBody {
         this.lastName = lastName;
     }
 
-    public String getContactInfo() {
-        return contactInfo;
-    }
-
-    public void setContactInfo(String contactInfo) {
-        this.contactInfo = contactInfo;
-    }
-
-    public Integer getPurchasedBooksCount() {
-        return purchasedBooksCount;
-    }
-
-    public void setPurchasedBooksCount(Integer purchasedBooksCount) {
-        this.purchasedBooksCount = purchasedBooksCount;
-    }
-
-    public Books getBook() {
-        return book;
-    }
-
-    public void setBook(Books book) {
-        this.book = book;
-    }
 }

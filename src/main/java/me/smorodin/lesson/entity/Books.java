@@ -1,15 +1,11 @@
 package me.smorodin.lesson.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Table;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "books")
@@ -22,30 +18,35 @@ public class Books {
     @Column(nullable = false, length = 150)
     private String title;
 
-    @Column(nullable = false, length = 100)
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
     private Author author;
 
+    @ManyToMany
+    @JoinTable(
+            name = "reader_books",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "reader_id")
+    )
+    private Set<Reader> readers;
 
-
-    @Column(unique = true, nullable = false, length = 20)
-    private String isbn;
-
+    @Column(name = "published_date")
     private LocalDate publishedDate;
 
-    public Books() {
-    }
 
-    public Books(String title, Author author, String isbn, LocalDate publishedDate) {
+    public Books(String title, Author author, Reader reader, LocalDate publishedDate) {
         this.title = title;
         this.author = author;
-        this.isbn = isbn;
         this.publishedDate = publishedDate;
+    }
+
+    public Books() {
+
     }
 
     public Long getId() {
         return id;
     }
-
 
     public String getTitle() {
         return title;
@@ -53,6 +54,23 @@ public class Books {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Set<Reader> getReaders() {
+        return readers;
+    }
+    public void setReaders(Set<Reader> readers) {
+        this.readers = readers;
+    }
+
+    @Transient
+    public Set<String> getReadersInfo() {
+        if (readers == null) {
+            return Set.of();
+        }
+        return readers.stream()
+                .map(reader -> reader.getId() + ": " + reader.getFirstName() + " " + reader.getLastName())
+                .collect(Collectors.toSet());
     }
 
     public Author getAuthor() {
@@ -63,13 +81,6 @@ public class Books {
         this.author = author;
     }
 
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
 
     public LocalDate getPublishedDate() {
         return publishedDate;
@@ -81,11 +92,24 @@ public class Books {
 
     @Override
     public String toString() {
+        StringBuilder readersNames = new StringBuilder();
+        if (readers != null && !readers.isEmpty()) {
+            for (Reader reader : readers) {
+                readersNames.append(reader.getFirstName()).append(" ").append(reader.getLastName()).append(", ");
+            }
+            // Удаляем последнюю запятую и пробел
+            if (!readersNames.isEmpty()) {
+                readersNames.setLength(readersNames.length() - 2);
+            }
+
+        } else {
+            readersNames.append("none");
+        }
         return "Books{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", isbn='" + isbn + '\'' +
+                ", author=" + (author != null ? author.getName() : "null") +
+                ", readers=" + readersNames.toString() +
                 ", publishedDate=" + publishedDate +
                 '}';
     }

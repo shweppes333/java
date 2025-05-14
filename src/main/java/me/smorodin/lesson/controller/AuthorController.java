@@ -19,9 +19,23 @@ public class AuthorController {
         Author savedAuthor = authorRepo.save(author);
         return ResponseEntity.ok(savedAuthor);
     }
+
+
     @GetMapping("authors/all")
     public ResponseEntity<List<Author>> getAllAuthors() {
         List<Author> authors = (List<Author>) authorRepo.findAll();
         return ResponseEntity.ok(authors);
     }
+
+    @PutMapping("authors/update/{id}")
+    public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody Author authorDetails) {
+        return authorRepo.findById(id)
+                .map(author -> {
+                    author.setName(authorDetails.getName());
+                    Author updatedAuthor = authorRepo.save(author);
+                    return ResponseEntity.ok(updatedAuthor);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
 }

@@ -20,8 +20,6 @@ public class Author {
     @Column(nullable = false, length = 100, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Books> books;
 
     public Author() {
     }
@@ -43,13 +41,7 @@ public class Author {
         this.name = name;
     }
 
-    public Set<Books> getBooks() {
-        return books;
-    }
 
-    public void setBooks(Set<Books> books) {
-        this.books = books;
-    }
 
     @Override
     public String toString() {

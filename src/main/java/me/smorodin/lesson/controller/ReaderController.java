@@ -6,11 +6,11 @@ import me.smorodin.lesson.repo.ReaderRepo;
 import me.smorodin.lesson.pojo.ReaderBody;
 import me.smorodin.lesson.entity.Reader;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.Mapping;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+
 import org.springframework.http.ResponseEntity;
 import java.util.List;
 
@@ -27,8 +27,6 @@ public class ReaderController {
         Reader reader = new Reader();
         reader.setFirstName(readerBody.getFirstName());
         reader.setLastName(readerBody.getLastName());
-        reader.setContactInfo(readerBody.getContactInfo());
-        reader.setBook(readerBody.getBook());
         readerRepo.save(reader);
         return ResponseEntity.ok(reader);
     }
