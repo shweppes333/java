@@ -53,5 +53,10 @@ public class BooksBody {
         this.publishedDate = publishedDate;
     }
 
+
+    public Set<Reader> getReadersByBookId(Long bookId) {
+        // Предполагается, что readers уже инициализированы
+        return readers != null ? readers : Set.of(); // Возвращает пустой набор, если readers не инициализирован
+    }
 }
 

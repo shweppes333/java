@@ -24,7 +24,7 @@ public class Books {
 
     @ManyToMany
     @JoinTable(
-            name = "reader_books",
+            name = "readers_books",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "reader_id")
     )
@@ -63,15 +63,7 @@ public class Books {
         this.readers = readers;
     }
 
-    @Transient
-    public Set<String> getReadersInfo() {
-        if (readers == null) {
-            return Set.of();
-        }
-        return readers.stream()
-                .map(reader -> reader.getId() + ": " + reader.getFirstName() + " " + reader.getLastName())
-                .collect(Collectors.toSet());
-    }
+
 
     public Author getAuthor() {
         return author;

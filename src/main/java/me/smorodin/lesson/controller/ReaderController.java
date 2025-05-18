@@ -1,7 +1,6 @@
 package me.smorodin.lesson.controller;
 
-
-
+import me.smorodin.lesson.repo.BooksRepo;
 import me.smorodin.lesson.repo.ReaderRepo;
 import me.smorodin.lesson.pojo.ReaderBody;
 import me.smorodin.lesson.entity.Reader;
@@ -17,9 +16,11 @@ import java.util.List;
 @RestController
 public class ReaderController {
     private final ReaderRepo readerRepo;
+    private final BooksRepo booksRepo;
 
-    public ReaderController(ReaderRepo readerRepo) {
+    public ReaderController(ReaderRepo readerRepo, BooksRepo booksRepo) {
         this.readerRepo = readerRepo;
+        this.booksRepo = booksRepo;
     }
 
     @PostMapping("/reader/create")

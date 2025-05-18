@@ -1,7 +1,9 @@
 package me.smorodin.lesson.entity;
 
 import jakarta.persistence.*;
+
 import java.util.Set;
+
 
 @Entity
 @Table(name = "readers")
@@ -17,21 +19,15 @@ public class Reader {
     @Column(nullable = false, length = 100)
     private String lastName;
 
-    @ManyToMany
-    @JoinTable(
-            name = "reader_books",
-            joinColumns = @JoinColumn(name = "reader_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
-    )
+    @ManyToMany(mappedBy = "readers_books")
     private Set<Books> books;
 
     public Reader() {
     }
 
-    public Reader(String firstName, String lastName, Set<Books> books) {
+    public Reader(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.books = books;
     }
 
     public Long getId() {
@@ -54,6 +50,12 @@ public class Reader {
         this.lastName = lastName;
     }
 
+    public Set<Books> getBooks() {
+        return books;
+    }
+    public void setBooks(Set<Books> books) {
+        this.books = books;
+    }
 
     @Override
     public String toString() {
